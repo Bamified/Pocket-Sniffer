@@ -1,6 +1,6 @@
 #!/usr/bin/python
 """	Barebones packet sniffer created in/for Linux
-	Can't be used in Windows, because SOCK_RAW is disabled
+	Can't be used in Windows, because SOCK_RAW is disabled (line 136)
 	
 	Created by: Bart Frijters"""
 
