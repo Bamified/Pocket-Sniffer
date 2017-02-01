@@ -16,7 +16,7 @@ def analyze_tcp_header(data):
 	dst_port 	= tcp_hdr[1]
 	seq_num 	= tcp_hdr[2]
 	ack_num 	= tcp_hdr[3]
-	data_offset = tcp_hdr[4] >> 12
+	data_offset 	= tcp_hdr[4] >> 12
 	reserved 	= (tcp_hdr[4] >> 6) & 0x03ff #Must be zero (0000 0011 1111 1111)
 	flags 		= tcp_hdr[4] & 0x003f #0000 0000 0011 1111
 	urg 		= flags & 0x0020
@@ -49,11 +49,11 @@ def analyze_tcp_header(data):
 
 #https://tools.ietf.org/html/rfc768
 def analyze_udp_header(data):
-	udp_hdr = struct.unpack("!4H", data[:8])
-	src_port = udp_hdr[0]
-	des_port = udp_hdr[1]
-	length = udp_hdr[2]
-	checksum = udp_hdr[3]
+	udp_hdr 	= struct.unpack("!4H", data[:8])
+	src_port 	= udp_hdr[0]
+	des_port	= udp_hdr[1]
+	length 		= udp_hdr[2]
+	checksum 	= udp_hdr[3]
 	
 	print "--------------UDP HEADER---------------"
 	print "\tSource:\t%uh" % src_port
@@ -66,17 +66,17 @@ def analyze_udp_header(data):
 
 #https://tools.ietf.org/html/rfc791
 def analyze_ip_header(data):
-	ip_hdr = struct.unpack("!6H4s4s" , data [:20])
-	version = ip_hdr[0] >> 12 			#version
+	ip_hdr 	= struct.unpack("!6H4s4s" , data [:20])
+	version = ip_hdr[0] >> 12 		#version
 	ihl 	= (ip_hdr[0] >> 8) & 0x0f 	#Internet Header Length
-	tos		= ip_hdr[0] & 0x00ff 		#Types of Service
-	tot_len = ip_hdr[1] 				#total length
-	ip_id	= ip_hdr[2] 				#Identification
-	flags 	= ip_hdr[3] >> 13 			#flags (first 3 bits)
+	tos	= ip_hdr[0] & 0x00ff 		#Types of Service
+	tot_len = ip_hdr[1] 			#total length
+	ip_id	= ip_hdr[2] 			#Identification
+	flags 	= ip_hdr[3] >> 13 		#flags (first 3 bits)
 	offset 	= ip_hdr[3] & 0x1fff 		#fragment offset (ignore first 3 bits)
-	ttl 	= ip_hdr[4] >> 8			#Time to Live
+	ttl 	= ip_hdr[4] >> 8		#Time to Live
 	ip_pro	= ip_hdr[4] & 0x00ff		#Protocol
-	ch_sum	= ip_hdr[5]					#Header checksum
+	ch_sum	= ip_hdr[5]			#Header checksum
 	src_add = socket.inet_ntoa(ip_hdr[6])	#Source address
 	des_add = socket.inet_ntoa(ip_hdr[7])	#Destination address
 	
@@ -114,7 +114,7 @@ def analyze_ethernet_header(data):
 	ip_boolean = False
 	
 	#data[:14] -> 6 + 6 + 2 bytes
-	eth_hdr = struct.unpack("!6s6sH" , data[:14]) #IPv4 = 0x0000
+	eth_hdr 	= struct.unpack("!6s6sH" , data[:14]) #IPv4 = 0x0000
 	mac_dest 	= binascii.hexlify(eth_hdr[0]) 	#Destination MAC
 	mac_src 	= binascii.hexlify(eth_hdr[1])	#Source MAC
 	protocol 	= eth_hdr[2] >> 8	#Next protocol
